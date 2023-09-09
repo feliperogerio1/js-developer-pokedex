@@ -78,6 +78,18 @@
     background-color: #f9aec7;
 }
 
+#title {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+#pokebola-image {
+    width: 30px;
+    height: auto;
+    display: inline;
+}
+
 .pokemon {
     display: flex;
     flex-direction: column;
