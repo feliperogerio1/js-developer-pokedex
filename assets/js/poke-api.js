@@ -38,6 +38,10 @@ pokeApi.getPokemonDetail = (pokemon) => {
         .then(convertPokeApiDetailToPokemon)
 }
 
+// função feita para conseguir pegar um único pokémon por meio do id dele. A URL da pokeapi recebe 
+// o id do pokémon e faz um solicitação. A resposta da solicitação está no response. Esse response 
+// contém informações sobre os status da solicitação HTTP, cabeçalho e o corpo da resposta. Para acessar 
+// o corpo da respota, convertemos o response para json.
 pokeApi.getPokemonDetailById = (pokemonId) => { 
     const urlId = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
     return fetch(urlId)
@@ -45,20 +49,19 @@ pokeApi.getPokemonDetailById = (pokemonId) => {
         .then(convertPokeApiDetailToPokemon)
 }
 
+// 1 Definindo uma função chamada getPokemons como uma propriedade do objeto pokeApi;
 pokeApi.getPokemons = (offset = 0, limit = 5) => { 
+    // 2 A const url é usada para buscar a lista de pokemon;
     const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
 
+    // 3 O "fetch(url)" faz uma solicitação HTTP GET à URL. O fetch é um recurso nativo do JavaScript 
+    //para fazer solicitações de rede;
     return fetch(url)
+        // 4 O ".then()" permite você falar o que vai acontecer caso uma promise é resolvida com usada
+        //ela recebe o valor resolvido pela promise como um argumento;
         .then((response) => response.json())
         .then((jsonBody) => jsonBody.results)
         .then((pokemons) => pokemons.map(pokeApi.getPokemonDetail))
         .then((detailRequests) => Promise.all(detailRequests))
         .then((pokemonsDetails) => pokemonsDetails)
 }
-
-// 1    Definindo uma função chamada getPokemons como uma propriedade do objeto pokeApi;
-// 2    A const url é usada para buscar a lista de pokemon;
-// 3    O fetch url faz uma solicitação HTTP GET à URL. O fetch é um recurso nativo do JavaScript 
-//para fazer solicitações de rede;
-// 4    O .then() permite você falar o que vai acontecer caso uma promise é resolvida com usada
-//ela recebe o valor resolvido pela promise como um argumento;
